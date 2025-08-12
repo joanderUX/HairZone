@@ -110,8 +110,9 @@ function initializeSmoothScrolling() {
         });
     });
     
-    // Uncomment the line below to disable aggressive wheel handling and let CSS scroll-snap handle it
-    // return; // This will disable the wheel event handler below
+    // Disable aggressive wheel handling to prevent unwanted auto-scrolling
+    // Let CSS scroll-snap handle the scrolling naturally
+    return;
     
     // Add wheel event listener for better scroll control - but make it less aggressive
     if (appContainer) {
@@ -335,24 +336,8 @@ document.addEventListener('keydown', function(event) {
         handleBooking();
     }
     
-    // Arrow keys for section navigation
-    if (event.key === 'ArrowDown' || event.key === 'PageDown') {
-        event.preventDefault();
-        const sections = document.querySelectorAll('.hero, .about, .services, .contact');
-        const currentSection = getCurrentSection(sections);
-        if (currentSection < sections.length - 1) {
-            scrollToSectionByIndex(currentSection + 1);
-        }
-    }
-    
-    if (event.key === 'ArrowUp' || event.key === 'PageUp') {
-        event.preventDefault();
-        const sections = document.querySelectorAll('.hero, .about, .services, .contact');
-        const currentSection = getCurrentSection(sections);
-        if (currentSection > 0) {
-            scrollToSectionByIndex(currentSection - 1);
-        }
-    }
+    // Disable arrow key navigation to prevent unwanted scrolling
+    // Let users scroll naturally with mouse/touch
 });
 
 // Performance optimization: Debounce scroll events

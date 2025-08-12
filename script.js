@@ -2,11 +2,13 @@
 let isLoading = true;
 let scrollY = 0;
 let showFloatingButton = false;
+let isScrolling = false;
 
 // DOM elements
 const preloader = document.getElementById('preloader');
 const floatingBookingBtn = document.getElementById('floatingBookingBtn');
 const heroBackground = document.getElementById('heroBackground');
+const appContainer = document.querySelector('.app-container');
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -22,6 +24,9 @@ function initializeApp() {
     
     // Initialize intersection observer for animations
     initializeIntersectionObserver();
+    
+    // Initialize smooth scrolling
+    initializeSmoothScrolling();
 }
 
 // Preloader functionality
@@ -37,11 +42,16 @@ function startPreloader() {
 
 // Scroll effects
 function initializeScrollEffects() {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    if (appContainer) {
+        appContainer.addEventListener('scroll', handleScroll, { passive: true });
+    } else {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    }
 }
 
 function handleScroll() {
-    const currentScrollY = window.scrollY;
+    const scrollElement = appContainer || window;
+    const currentScrollY = scrollElement.scrollY || scrollElement.scrollTop;
     scrollY = currentScrollY;
     showFloatingButton = currentScrollY > 300;
     
@@ -62,8 +72,6 @@ function handleScroll() {
 
 // Intersection Observer for reveal animations
 function initializeIntersectionObserver() {
-    if (isLoading) return;
-    
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -90,6 +98,77 @@ function initializeIntersectionObserver() {
     });
 }
 
+// Smooth scrolling functionality
+function initializeSmoothScrolling() {
+    // Add smooth scrolling for all internal links
+    const internalLinks = document.querySelectorAll('a[href^="#"]');
+    internalLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            scrollToSection(targetId);
+        });
+    });
+    
+    // Add wheel event listener for better scroll control
+    if (appContainer) {
+        appContainer.addEventListener('wheel', handleWheel, { passive: false });
+    }
+}
+
+// Handle wheel scrolling for better snap behavior
+function handleWheel(e) {
+    if (isScrolling) {
+        e.preventDefault();
+        return;
+    }
+    
+    const sections = document.querySelectorAll('.hero, .about, .services, .contact');
+    const currentSection = getCurrentSection(sections);
+    
+    if (e.deltaY > 0 && currentSection < sections.length - 1) {
+        // Scrolling down
+        e.preventDefault();
+        scrollToSectionByIndex(currentSection + 1);
+    } else if (e.deltaY < 0 && currentSection > 0) {
+        // Scrolling up
+        e.preventDefault();
+        scrollToSectionByIndex(currentSection - 1);
+    }
+}
+
+// Get current section index
+function getCurrentSection(sections) {
+    const scrollElement = appContainer || window;
+    const scrollTop = scrollElement.scrollY || scrollElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    
+    for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollTop >= sectionTop - windowHeight / 2 && 
+            scrollTop < sectionTop + sectionHeight - windowHeight / 2) {
+            return i;
+        }
+    }
+    return 0;
+}
+
+// Scroll to section by index
+function scrollToSectionByIndex(index) {
+    const sections = document.querySelectorAll('.hero, .about, .services, .contact');
+    if (sections[index]) {
+        isScrolling = true;
+        sections[index].scrollIntoView({ behavior: 'smooth' });
+        
+        setTimeout(() => {
+            isScrolling = false;
+        }, 1000);
+    }
+}
+
 // Booking functionality
 function handleBooking() {
     window.open('https://bestill.timma.no/hairzonelilleng', '_blank');
@@ -99,7 +178,12 @@ function handleBooking() {
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
+        isScrolling = true;
         section.scrollIntoView({ behavior: 'smooth' });
+        
+        setTimeout(() => {
+            isScrolling = false;
+        }, 1000);
     }
 }
 
@@ -138,18 +222,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function handleImageError(img) {
     img.style.display = 'none';
 }
-
-// Add smooth scrolling for all internal links
-document.addEventListener('DOMContentLoaded', function() {
-    const internalLinks = document.querySelectorAll('a[href^="#"]');
-    internalLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            scrollToSection(targetId);
-        });
-    });
-});
 
 // Add mobile menu functionality if needed
 function toggleMobileMenu() {
@@ -218,6 +290,25 @@ document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter' && event.target.classList.contains('btn-primary')) {
         handleBooking();
     }
+    
+    // Arrow keys for section navigation
+    if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+        event.preventDefault();
+        const sections = document.querySelectorAll('.hero, .about, .services, .contact');
+        const currentSection = getCurrentSection(sections);
+        if (currentSection < sections.length - 1) {
+            scrollToSectionByIndex(currentSection + 1);
+        }
+    }
+    
+    if (event.key === 'ArrowUp' || event.key === 'PageUp') {
+        event.preventDefault();
+        const sections = document.querySelectorAll('.hero, .about, .services, .contact');
+        const currentSection = getCurrentSection(sections);
+        if (currentSection > 0) {
+            scrollToSectionByIndex(currentSection - 1);
+        }
+    }
 });
 
 // Performance optimization: Debounce scroll events
@@ -235,8 +326,13 @@ function debounce(func, wait) {
 
 // Apply debouncing to scroll handler
 const debouncedScrollHandler = debounce(handleScroll, 10);
-window.removeEventListener('scroll', handleScroll);
-window.addEventListener('scroll', debouncedScrollHandler, { passive: true });
+if (appContainer) {
+    appContainer.removeEventListener('scroll', handleScroll);
+    appContainer.addEventListener('scroll', debouncedScrollHandler, { passive: true });
+} else {
+    window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', debouncedScrollHandler, { passive: true });
+}
 
 // Add accessibility improvements
 document.addEventListener('DOMContentLoaded', function() {
@@ -244,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const focusableElements = document.querySelectorAll('button, a, input, textarea, select');
     focusableElements.forEach(element => {
         element.addEventListener('focus', function() {
-            this.style.outline = '2px solid #d4a574';
+            this.style.outline = '2px solid #2d3748';
             this.style.outlineOffset = '2px';
         });
         

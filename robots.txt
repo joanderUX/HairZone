@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://hairzone.no/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Allow all important files
+Allow: /styles.css
+Allow: /script.js
+Allow: /hair-zone-logo.png
+Allow: /favicon.ico

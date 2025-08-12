@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair Zone - Luksuriøs Frisørsalong</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-content">
+            <div class="logo-animation">
+                <h1>Hair Zone</h1>
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <!-- Floating Booking Button -->
+        <button class="floating-booking-btn" id="floatingBookingBtn" onclick="handleBooking()" aria-label="Book appointment">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Book
+        </button>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-background" id="heroBackground">
+                <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920&h=1080&fit=crop&crop=center" 
+                     alt="Elegant frisørsalong interiør" 
+                     class="hero-image"
+                     onerror="this.style.display='none'">
+            </div>
+            <div class="hero-content">
+                <div class="hero-logo-container">
+                    <img src="hair-zone-logo.png" 
+                         alt="Hair Zone Logo" 
+                         class="hero-logo"
+                         onerror="this.style.display='none'">
+                </div>
+                <p class="hero-subtitle hero-fade-in">
+                    Hair Zone er en trendy og tidsriktig frisørsalong som ligger i mellom pilestredet og bogstadveien i Oslo. Hos Hair Zone får du noe mer, vi prøver å yte det lille ekstra!
+                </p>
+                <button class="btn-primary hero-fade-in" onclick="handleBooking()">
+                    Book din time
+                </button>
+            </div>
+            <div class="scroll-indicator" onclick="scrollToSection('about')">
+                <div class="scroll-arrow"></div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about reveal-on-scroll" id="about">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2>Vår filosofi og våre tjenester</h2>
+                        <p class="about-paragraph">
+                            Hos Hair Zone tror vi at eksepsjonell hårstyling er en kunstform. Vi tilbyr et komplett spekter av tjenester for både kvinner og menn: dameklipp, herreklipp, vask og føn, hårkur, vippe og bryn-behandlinger, hull i ørene, farging av hår, styling og makeup, samt brydepynt for spesielle anledninger.
+                        </p>
+                        <p class="about-paragraph">
+                            Vi kombinerer mange års erfaring med de nyeste teknikkene for å skape looks som fremhever din naturlige skjønnhet og reflekterer din personlige stil. Hver avtale er en personlig opplevelse i våre intime, luksuriøse omgivelser.
+                        </p>
+                    </div>
+                    <div class="about-image-container">
+                        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&h=800&fit=crop&crop=center" 
+                             alt="Profesjonell hårstyling" 
+                             class="about-image"
+                             loading="lazy"
+                             onerror="this.style.display='none'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services reveal-on-scroll" id="services">
+            <div class="container">
+                <div class="services-header">
+                    <h2>Våre signatur-tjenester</h2>
+                    <p class="services-subtitle">
+                        Oppdag vårt utvalg av premium-tjenester, hver designet for å bringe frem din unike skjønnhet
+                    </p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="6" cy="6" r="3"/>
+                                <circle cx="6" cy="18" r="3"/>
+                                <path d="m9 12 6-3"/>
+                                <path d="m9 12 6 3"/>
+                                <path d="m15 9 3-3"/>
+                                <path d="m15 15 3 3"/>
+                            </svg>
+                        </div>
+                        <h3>Presisjonsklipp</h3>
+                        <p>Ekspertklipp tilpasset din ansiktsform og livsstil, som skaper det perfekte grunnlaget for din look.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                            </svg>
+                        </div>
+                        <h3>Fargekunst</h3>
+                        <p>Fra subtile høylys til dramatiske forvandlinger - våre fargeeksperter skaper vakre, dimensjonale resultater.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </div>
+                        <h3>Styling og behandlinger</h3>
+                        <p>Luksuriøse behandlinger og profesjonell styling for spesielle anledninger eller din daglige eleganse.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact reveal-on-scroll" id="contact">
+            <div class="container">
+                <div class="contact-header">
+                    <h2>Besøk vår salong</h2>
+                    <p>Book din time og opplev forskjellen av personlig luksus</p>
+                </div>
+                
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Adresse</h3>
+                                <p class="contact-address">
+                                    Sporveisgata 21<br />
+                                    0354 Oslo
+                                </p>
+                                <a href="https://maps.google.com/?q=Sporveisgata+21,+0354+Oslo" target="_blank" rel="noopener noreferrer" class="map-link">
+                                    Se på Google Maps →
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Telefon</h3>
+                                <a href="tel:+4722465100" class="phone-link">22 46 51 00</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h3>E-post</h3>
+                                <a href="mailto:hairzone@live.no" class="phone-link">hairzone@live.no</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12,6 12,12 16,14"></polyline>
+                                </svg>
+                            </div>
+                            <div class="contact-details">
+                                <h3>Åpningstider</h3>
+                                <div class="hours-list">
+                                    <p>Mandag: 09:00 - 17:00</p>
+                                    <p>Tirsdag: 07:00 - 19:00</p>
+                                    <p>Onsdag: 09:00 - 19:00</p>
+                                    <p>Torsdag: 10:00 - 19:00</p>
+                                    <p>Fredag: 07:00 - 17:00</p>
+                                    <p>Lørdag: Etter avtale</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-card">
+                        <h3>Klar for å forvandle din look?</h3>
+                        <p class="booking-text">
+                            Book din konsultasjon i dag og la våre ekspertstylister skape en look som er unikt deg. Vi anbefaler å booke på forhånd for å sikre ditt foretrukne tidspunkt.
+                        </p>
+                        <button class="btn-primary btn-full" onclick="handleBooking()">
+                            Book online nå
+                        </button>
+                        <p class="booking-footer">
+                            Ring oss på <a href="tel:+4722465100" class="phone-link">22 46 51 00</a>
+                            <br />
+                            eller send e-post til <a href="mailto:hairzone@live.no" class="phone-link">hairzone@live.no</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p class="footer-copyright">© 2025 Hair Zone. Alle rettigheter reservert.</p>
+                <p class="footer-tagline">Der eleganse møter ekspertise</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

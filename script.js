@@ -110,9 +110,41 @@ function initializeSmoothScrolling() {
         });
     });
     
-    // Add wheel event listener for better scroll control
+    // Uncomment the line below to disable aggressive wheel handling and let CSS scroll-snap handle it
+    // return; // This will disable the wheel event handler below
+    
+    // Add wheel event listener for better scroll control - but make it less aggressive
     if (appContainer) {
         appContainer.addEventListener('wheel', handleWheel, { passive: false });
+    }
+    
+    // Add touch events for mobile
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    if (appContainer) {
+        appContainer.addEventListener('touchstart', function(e) {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        
+        appContainer.addEventListener('touchend', function(e) {
+            touchEndY = e.changedTouches[0].clientY;
+            const diff = touchStartY - touchEndY;
+            
+            // Only trigger on significant swipe
+            if (Math.abs(diff) > 50 && !isScrolling) {
+                const sections = document.querySelectorAll('.hero, .about, .services, .contact');
+                const currentSection = getCurrentSection(sections);
+                
+                if (diff > 0 && currentSection < sections.length - 1) {
+                    // Swipe up - go to next section
+                    scrollToSectionByIndex(currentSection + 1);
+                } else if (diff < 0 && currentSection > 0) {
+                    // Swipe down - go to previous section
+                    scrollToSectionByIndex(currentSection - 1);
+                }
+            }
+        }, { passive: true });
     }
 }
 
@@ -123,19 +155,31 @@ function handleWheel(e) {
         return;
     }
     
+    // Add a small delay to prevent rapid scrolling
+    const now = Date.now();
+    if (now - lastScrollTime < 1000) {
+        e.preventDefault();
+        return;
+    }
+    
     const sections = document.querySelectorAll('.hero, .about, .services, .contact');
     const currentSection = getCurrentSection(sections);
     
     if (e.deltaY > 0 && currentSection < sections.length - 1) {
         // Scrolling down
         e.preventDefault();
+        lastScrollTime = now;
         scrollToSectionByIndex(currentSection + 1);
     } else if (e.deltaY < 0 && currentSection > 0) {
         // Scrolling up
         e.preventDefault();
+        lastScrollTime = now;
         scrollToSectionByIndex(currentSection - 1);
     }
 }
+
+// Add global variable for scroll timing
+let lastScrollTime = 0;
 
 // Get current section index
 function getCurrentSection(sections) {

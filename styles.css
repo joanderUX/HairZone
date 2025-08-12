@@ -368,7 +368,7 @@ p {
 /* Services Section */
 .services {
     padding: 120px 0;
-    background: #fafafa;
+    background: linear-gradient(135deg, #2d3748 0%, #12161c 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -382,23 +382,14 @@ p {
 .services-header h2 {
     position: relative;
     margin-bottom: 24px;
+    color: #ffffff;
 }
 
-.services-header h2::after {
-    content: '';
-    position: absolute;
-    bottom: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 1px;
-    background: #a0aec0;
-    border-radius: 1px;
-}
+
 
 .services-subtitle {
     font-size: 1.125rem;
-    color: #4a5568;
+    color: rgba(255, 255, 255, 0.9);
     max-width: 600px;
     margin: 0 auto;
     font-weight: 400;

@@ -331,7 +331,7 @@ p {
 /* About Section */
 .about {
     padding: 120px 0;
-    background: #ffffff;
+    background: #f8fafc;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -620,6 +620,43 @@ p {
     color: #a0aec0;
     font-size: 0.9rem;
     font-weight: 300;
+}
+
+/* Footer social icons */
+.footer-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.follow-text {
+    color: #ffffff;
+    font-size: 0.95rem;
+    opacity: 0.9;
+    font-weight: 400;
+}
+
+.social-icons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.social-link svg {
+    width: 28px;
+    height: 28px;
+    display: block;
+    color: #ffffff;
+    fill: currentColor;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    opacity: 0.95;
+}
+
+.social-link:hover svg {
+    transform: translateY(-4px) scale(1.02);
+    opacity: 1;
 }
 
 /* Reveal animations */
